@@ -3,7 +3,7 @@
 
 This project is a user-friendly website designed to help users search for movies to watch. Utilizing the TMDB API, it provides comprehensive movie information, including synopses, ratings, and trailers, allowing users to make informed choices. Users can easily browse through a vast database of movies and discover new recommendations based on their interests. With intuitive navigation and detailed movie insights, this website aims to enhance the movie discovery process, making it enjoyable and straightforward.
 
-Live Project Link: https://FlixView-alpha-steel.vercel.app/
+Live Project Link: https://flix-view.vercel.app/
 
 ## Technologies and Languages Used
 
