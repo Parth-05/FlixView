@@ -1,5 +1,5 @@
 ## Project Description
-![FlixView](https://github.com/Parth-05/FlixView/assets/102514687/64ac68aa-6b1b-4f3d-8bb9-2b994645f6f6)
+![image](https://github.com/Parth-05/FlixView/assets/102514687/8a2a59bf-e41c-46cf-a92e-7eebdfc9caff)
 
 This project is a user-friendly website designed to help users search for movies to watch. Utilizing the TMDB API, it provides comprehensive movie information, including synopses, ratings, and trailers, allowing users to make informed choices. Users can easily browse through a vast database of movies and discover new recommendations based on their interests. With intuitive navigation and detailed movie insights, this website aims to enhance the movie discovery process, making it enjoyable and straightforward.
 
