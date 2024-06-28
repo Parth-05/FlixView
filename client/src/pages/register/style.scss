@@ -1,0 +1,84 @@
+@import "../../mixins.scss";
+
+.registerContainer {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+
+    .title {
+        color: white;
+        font-size: 50px;
+    }
+
+    .registerForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .inputFields {
+            display: flex;
+            flex-direction: column; /* Arrange items vertically */
+            align-items: center;
+            justify-content: center;
+
+            input {
+                margin-bottom: 15px; /* Add some space between the input fields */
+                height: 50px;
+                background-color: white;
+                outline: 0;
+                border: 0;
+                border-radius: 30px;
+                padding: 0 15px;
+                font-size: 14px;
+
+                @include md {
+                    height: 60px;
+                    font-size: 20px;
+                    padding: 0 30px;
+                }
+            }
+        }
+
+        .registerButton {
+            margin-top: 5px; /* Increase space between input fields and button */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            button {
+                width: 100px;
+                height: 50px;
+                background: var(--gradient);
+                color: white;
+                outline: 0;
+                border: 0;
+                border-radius: 30px;
+                font-size: 16px;
+                cursor: pointer;
+
+                @include md {
+                    width: 150px;
+                    height: 60px;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+
+    .textContainer {
+        padding-top: 10px;
+        .text-white{
+            color: white;
+        }
+        .text {
+            text-decoration: none;
+            &:hover{
+                color: rgb(14, 102, 224);
+                cursor: pointer;
+            }
+        }
+    }
+}

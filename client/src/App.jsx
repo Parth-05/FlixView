@@ -11,6 +11,8 @@ import Details from './pages/details/Details';
 import SearchResult from './pages/searchResult/SearchResult';
 import Explore from './pages/explore/Explore';
 import PageNotFound from './pages/404/PageNotFound';
+import Login from './pages/login/Login';
+import Register from './pages/register/Register.jsx';
 
 
 function App() {
@@ -62,6 +64,8 @@ function App() {
         <Route path='/:mediaType/:id' element={<Details />} />
         <Route path='/search/:query' element={<SearchResult />} />
         <Route path='/explore/:mediaType' element={<Explore />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
       <Footer />
