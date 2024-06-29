@@ -22,22 +22,35 @@ export const fetchDataFromApi = async (url, params) => {
     }
 }
 
+// Login
 export const loginUser = async (email, password) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
         return response.data;
     } catch (error) {
         console.log(error.response.data);
-        return error;
+        return error.response.data;
     }
 };
 
+// Register User
+export const registerUser = async (name, email, password) => {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/auth/register`, { name, email, password })
+        return response.data;
+    } catch (error) {
+        console.log(error.response.data);
+        return error.response.data;
+    }
+}
+
+// Logout
 export const logoutUser = async () => {
     try {
         const response = await axios.post(`${API_BASE_URL}/auth/logout`);
         return response.data;
     } catch (error) {
         console.log(error.response.data);
-        return error;
+        return error.response.data;
     }
 }

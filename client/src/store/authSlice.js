@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { loginUser, logoutUser } from '../utils/api';
+import { loginUser, logoutUser, registerUser } from '../utils/api';
 
+// Login
 export const authenticateUser = createAsyncThunk(
-    'auth/login',
+    'login',
     async ({ email, password }, { rejectWithValue }) => {
         try {
             const response = await loginUser(email, password);
-            console.log(response)
             if (response.status !== 200) {
-                return rejectWithValue({ message: 'Invalid Credentials!' });
+                return rejectWithValue({ message: response.message });
             }
             return response;
         } catch (error) {
@@ -17,6 +17,22 @@ export const authenticateUser = createAsyncThunk(
     }
 );
 
+// Register
+export const register = createAsyncThunk(
+    'register', async({ name, email, password }, { rejectWithValue }) => {
+        try {
+            const response = await registerUser(name, email, password);
+            if (response.status !== 201) {
+                return rejectWithValue({ message: response.message })
+            }
+            return response;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+// Logout
 export const logout = createAsyncThunk(
     "auth/logout",
     async (_, { rejectWithValue }) => {
@@ -44,16 +60,31 @@ const authSlice = createSlice({
             // Login Handlers
             .addCase(authenticateUser.pending, (state) => {
                 state.isLoading = true;
-                state.error = null; // Resetting error on new login attempt
+                state.error = null; 
             })
             .addCase(authenticateUser.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload// Assuming userInfo is returned
+                state.user = action.payload
                 state.error = null;
             })
             .addCase(authenticateUser.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload.message || 'Could not log in. Please try again later.';
+                state.error = action.payload.message;
+            })
+
+            // Register Handlers
+            .addCase(register.pending, (state) => {
+                state.isLoading = true;
+                state.error = null; 
+            })
+            .addCase(register.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = action.payload
+                state.error = null;
+            })
+            .addCase(register.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload.message;
             })
 
             // Logout Handlers
@@ -61,14 +92,14 @@ const authSlice = createSlice({
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(logout.fulfilled, (state, action) => {
+            .addCase(logout.fulfilled, (state) => {
                 state.isLoading = false;
                 state.user = null;
                 state.error = null;
             })
             .addCase(logout.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload.message || "Error logging out!";
+                state.error = action.payload.message;
             })
     },
 });

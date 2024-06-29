@@ -3,6 +3,8 @@ import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector  } from 'react-redux';
 import { authenticateUser } from "../../store/authSlice";
+import useFetch from '../../hooks/useFetch';
+import Img from '../../components/lazyLoadImage/Img';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -12,6 +14,9 @@ const Login = () => {
     const error = useSelector(state => state.auth.error);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [background, setBackground] = useState("");
+    const { url } = useSelector((state) => state.home);
+    const { data, loading } = useFetch("/movie/upcoming");
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -20,6 +25,13 @@ const Login = () => {
             navigate("/");
         }
     };
+
+    useEffect(() => {
+        const bg =
+            url.backdrop +
+            data?.results?.[Math.floor(Math.random() * 20)]?.backdrop_path;
+        setBackground(bg);
+    }, [data]);
 
     // Using useEffect to handle post-login actions based on user state
     useEffect(() => {
@@ -31,14 +43,20 @@ const Login = () => {
 
     return (
         <div className='loginContainer'>
+        {!loading && (
+                <div className="backdrop-img">
+                    <Img src={background} />
+                </div>
+            )}
+
             <div className='title'>
                 <span>Login</span>
             </div>
             <form onSubmit={handleLogin}>
                 <div className='loginForm'>
                     <div className='inputFields'>
-                        <input type='text' placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
-                        <input type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+                        <input type='text' required placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
+                        <input type='password' required placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div className='loginButton'>
                         <button type='submit'>Login</button>
@@ -46,7 +64,7 @@ const Login = () => {
                         {isLoading && <span className='loadingText'>Loading...</span>}
                         {error && <span className='errorText'>Error: {error}</span>}
                     <div className='textContainer'>
-                        <Link className='text' to="/register">Create account</Link>
+                        <Link className='text' to="/register">New user? Create account</Link>
                     </div>
                 </div>
             </form>
