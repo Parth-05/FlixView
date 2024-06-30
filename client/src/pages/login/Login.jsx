@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector  } from 'react-redux';
-import { authenticateUser } from "../../store/authSlice";
+import { authenticateUser, clearError } from "../../store/authSlice";
 import useFetch from '../../hooks/useFetch';
 import Img from '../../components/lazyLoadImage/Img';
 
@@ -25,6 +25,13 @@ const Login = () => {
             navigate("/");
         }
     };
+
+    const navigateToRegister = () => {
+        if (error){
+            dispatch(clearError());
+        }
+        navigate("/register");
+    }
 
     useEffect(() => {
         const bg =
@@ -64,7 +71,7 @@ const Login = () => {
                         {isLoading && <span className='loadingText'>Loading...</span>}
                         {error && <span className='errorText'>Error: {error}</span>}
                     <div className='textContainer'>
-                        <Link className='text' to="/register">New user? Create account</Link>
+                        <span className='text' onClick={navigateToRegister}>New user? Create account</span>
                     </div>
                 </div>
             </form>

@@ -17,7 +17,6 @@ export const fetchDataFromApi = async (url, params) => {
         });
         return data;
     } catch (error) {
-        console.log(error)
         return error;
     }
 }
@@ -28,8 +27,7 @@ export const loginUser = async (email, password) => {
         const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
         return response.data;
     } catch (error) {
-        console.log(error.response.data);
-        return error.response.data;
+        return error;
     }
 };
 
@@ -39,8 +37,7 @@ export const registerUser = async (name, email, password) => {
         const response = await axios.post(`${API_BASE_URL}/auth/register`, { name, email, password })
         return response.data;
     } catch (error) {
-        console.log(error.response.data);
-        return error.response.data;
+        return error;
     }
 }
 
@@ -50,7 +47,6 @@ export const logoutUser = async () => {
         const response = await axios.post(`${API_BASE_URL}/auth/logout`);
         return response.data;
     } catch (error) {
-        console.log(error.response.data);
         return error.response.data;
     }
 }
