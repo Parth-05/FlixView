@@ -54,6 +54,9 @@ const authSlice = createSlice({
         error: null,
     },
     reducers: {
+        clearError(state) {
+            state.error = null;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -69,7 +72,7 @@ const authSlice = createSlice({
             })
             .addCase(authenticateUser.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload.message;
+                state.error = action.payload?.message;
             })
 
             // Register Handlers
@@ -84,7 +87,7 @@ const authSlice = createSlice({
             })
             .addCase(register.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload.message;
+                state.error = action.payload?.message;
             })
 
             // Logout Handlers
@@ -104,5 +107,5 @@ const authSlice = createSlice({
     },
 });
 
-// export const { logout } = authSlice.actions;
+export const { clearError } = authSlice.actions;
 export default authSlice.reducer;

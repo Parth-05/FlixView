@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { register } from "../../store/authSlice";
+import { clearError, register } from "../../store/authSlice";
 import useFetch from '../../hooks/useFetch';
 import Img from '../../components/lazyLoadImage/Img';
 
@@ -28,6 +28,13 @@ const Register = () => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
     };
+
+    const navigateToLogin = () => {
+        if (error) {
+            dispatch(clearError());
+        }
+        navigate("/login");
+    }
 
     // validate password
     const validatePassword = (password) => {
@@ -109,7 +116,7 @@ const Register = () => {
                     {error && <span className='errorText'>Error: {error}</span>}
                     <div className='textContainer'>
                         <span className='text-white'>Already have an account? &nbsp;</span>
-                        <Link className='text' to="/login">Login</Link>
+                        <span className='text' onClick={navigateToLogin}>Login</span>
                     </div>
                 </div>
             </form>

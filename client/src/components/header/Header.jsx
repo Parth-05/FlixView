@@ -33,7 +33,6 @@ const Header = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(user);
   }, [location, user])
 
   const openSearch = () => {
