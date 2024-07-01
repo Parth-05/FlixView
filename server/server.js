@@ -18,7 +18,17 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
 
-const PORT = 8800
+// Serve static files from the React app
+if (process.env.NODE_ENV === 'production') {
+    const __dirname = path.resolve();
+    app.use(express.static(path.join(__dirname, '../client/dist')));
+  
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+    });
+  }
+
+const PORT = process.env.PORT || 8800;
 app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`)
 });
