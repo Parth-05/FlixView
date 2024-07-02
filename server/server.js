@@ -18,6 +18,11 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
 
+// default route to handle root requests
+app.get('/', (req, res) => {
+    res.send('Hello, this is the root route of the server!');
+  });
+
 const PORT = process.env.PORT || 8800
 app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`)
