@@ -8,7 +8,7 @@ export const authenticateUser = createAsyncThunk(
         try {
             const response = await loginUser(email, password);
             if (response.status !== 200) {
-                return rejectWithValue({ message: response.message });
+                return rejectWithValue({ message: response.response.data.message });
             }
             return response;
         } catch (error) {
@@ -23,7 +23,7 @@ export const register = createAsyncThunk(
         try {
             const response = await registerUser(name, email, password);
             if (response.status !== 201) {
-                return rejectWithValue({ message: response.message })
+                return rejectWithValue({ message: response.response.data.message })
             }
             return response;
         } catch (error) {

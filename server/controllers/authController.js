@@ -7,6 +7,15 @@ import prisma from '../lib/prisma.js';
 export const register = async (req, res) => {
     const { name, email, password } =req.body;
     try {
+
+        // Check if the user already exists
+        const existingUser = await prisma.user.findUnique({
+            where: { email },
+        });
+
+        if (existingUser) {
+            return res.status(400).json({ status: 400, message: "Email already exists." });
+        }
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
