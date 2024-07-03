@@ -151,6 +151,19 @@
             }
         }
     }
+
+    .authContainer {
+        // margin-top: 20px; /* Increase space between input fields and button */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .text-white {
+            color: white;
+            &:hover {
+                color: var(--pink);
+            }
+        }
+    }
 }
 
 @keyframes mobileMenu {
