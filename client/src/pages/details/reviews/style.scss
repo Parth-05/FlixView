@@ -1,0 +1,88 @@
+@import "../../../mixins.scss";
+
+.reviewsSection {
+    position: relative;
+    margin-bottom: 50px;
+    .sectionHeading {
+        font-size: 24px;
+        color: white;
+        margin-bottom: 25px;
+    }
+    .listItems {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .listItem {
+            display: flex;
+            align-items: flex-start;
+            color: white;
+            .profileImg {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin-right: 15px;
+                flex-shrink: 0; /* Ensures that the profile image container doesn't shrink */
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center top;
+                }
+            }
+            .details {
+                .author {
+                    font-size: 16px;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+                .content {
+                    font-size: 14px;
+                    line-height: 20px;
+                    opacity: 0.8;
+                }
+                .sentiment {
+                    font-size: 14px;
+                    line-height: 20px;
+                    margin-top: 10px;
+                    color: var(--pink);
+                }
+            }
+        }
+        .showMore {
+            cursor: pointer;
+            color: var(--pink);
+            text-align: center;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .reviewsSkeleton {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .skItem {
+            .row {
+                width: 100%;
+                height: 20px;
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
+            .row2 {
+                width: 75%;
+                height: 20px;
+                border-radius: 10px;
+                margin: 0 auto;
+            }
+        }
+    }
+
+    .noReviews {
+        color: white;
+        text-align: center;
+        font-size: 18px;
+        padding: 20px 0;
+    }
+}
