@@ -11,9 +11,6 @@ const headers = {
 
 export const fetchDataFromApi = async (url, params) => {
     try {
-        console.log("TMDB_BASE_URL: ", TMDB_BASE_URL)
-        console.log("URL: ", url)
-        console.log(TMDB_BASE_URL + url)
         const { data } = await axios.get( TMDB_BASE_URL + url, {
             headers,
             params
