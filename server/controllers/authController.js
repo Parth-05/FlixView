@@ -70,7 +70,7 @@ export const login = async (req, res) => {
         const {password: userPassword, ...userInfo} = user
 
         // Generate cookie and send to user
-        res.cookie("authtoken", token, {
+        return res.cookie("authtoken", token, {
             httpOnly: true,
             // secure: true,
             maxAge: cookieAge
