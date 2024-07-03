@@ -39,19 +39,23 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     const { email, password } = req.body;
     try {
-         // Check if user exists
-         const user = await prisma.user.findUnique({
+        // Check if user exists
+        const user = await prisma.user.findUnique({
             where: { email }
         });
 
         // if no user
         if (!user) {
+            console.log("User not found:", email);
             return res.status(401).json({ status: 401, message: 'Invalid Credentials!' });
         }
+
         // check if password is correct
         const isPasswordValid = await bcrypt.compare(password, user.password);
+
         // password doesn't match
         if (!isPasswordValid) {
+            console.log("Invalid password for user:", email);
             return res.status(401).json({ status: 401, message: 'Invalid Credentials!' });
         }
 
@@ -63,21 +67,22 @@ export const login = async (req, res) => {
             id: user.id,
             isAdmin: false
         },
-            process.env.JWt_SECRET_KEY,
+            process.env.JWT_SECRET_KEY,
             { expiresIn: cookieAge }
         );
 
-        const {password: userPassword, ...userInfo} = user
+        const { password: userPassword, ...userInfo } = user;
 
         // Generate cookie and send to user
         return res.cookie("authtoken", token, {
             httpOnly: true,
-            // secure: true,
+            // secure: true, 
             maxAge: cookieAge
-        }).status(200).json({ status: 200, message: "Login Successful.", data: userInfo })
+        }).status(200).json({ status: 200, message: "Login Successful.", data: userInfo });
 
     } catch (error) {
-        return res.status(500).json({ status: 500, message: "Error logging in!", error});
+        console.error("Error logging in:", error);
+        return res.status(500).json({ status: 500, message: "Error logging in!", error });
     }
 }
 
