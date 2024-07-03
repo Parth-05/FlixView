@@ -14,12 +14,13 @@ import PosterFallback from "../../../assets/no-poster.png";
 import { PlayIcon } from '../PlayIcon.jsx'
 import VideoPopup from "../../../components/videoPopup/VideoPopup.jsx";
 
-const DetailsBanner = ({ video, crew }) => {
+const DetailsBanner = ({ video, crew, reviews }) => {
     const [show, setShow] = useState(false);
     const [videoId, setVideoId] = useState(null);
+    const [showMoreReviews, setShowMoreReviews] = useState(false);
 
     const { mediaType, id } = useParams();
-    const { data, loading } = useFetch(`/${mediaType}/${id}`)
+    const { data, loading } = useFetch(`/${mediaType}/${id}`);
 
     const { url } = useSelector((state) => state.home);
 
@@ -32,6 +33,10 @@ const DetailsBanner = ({ video, crew }) => {
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
         return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
+    };
+
+    const handleShowMoreReviews = () => {
+        setShowMoreReviews(!showMoreReviews);
     };
 
     return (
@@ -164,7 +169,29 @@ const DetailsBanner = ({ video, crew }) => {
                                                 </span>
                                             </div>
                                         )}
-
+                                        {/* Reviews */}
+                                        {reviews?.length > 0 && (
+                                            <div className="reviews">
+                                                <div className="heading">
+                                                    Reviews
+                                                </div>
+                                                {reviews.slice(0, showMoreReviews ? reviews.length : 1).map((review, index) => (
+                                                    <div key={index} className="review">
+                                                        <div className="author">
+                                                            <strong>{review.author}</strong> wrote:
+                                                        </div>
+                                                        <div className="content">
+                                                            {review.content}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                {reviews.length > 1 && (
+                                                    <div className="show-more" onClick={handleShowMoreReviews}>
+                                                        {showMoreReviews ? "Show Less" : "Show More"}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <VideoPopup 
