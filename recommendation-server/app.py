@@ -1,4 +1,5 @@
 import os
+import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import pandas as pd
@@ -7,21 +8,25 @@ import pickle
 app = Flask(__name__)
 CORS(app)
 
-# Dynamically get the path to the pickle file
-model_path = os.path.join(os.path.dirname(__file__), 'models', 'model.pkl')
+# Set up logging
+logging.basicConfig(level=logging.INFO)
 
-# Load your model and data from the pickle file
-with open(model_path, 'rb') as f:
-    model = pickle.load(f)
+try:
+    # Dynamically get the path to the pickle file
+    model_path = os.path.join(os.path.dirname(__file__), 'models', 'model.pkl')
+    logging.info(f"Loading model from {model_path}")
 
-data_new = model['data']
-tfidf_vectorizer = model['tfidf_vectorizer']
-count_vectorizer = model['count_vectorizer']
-cosine_sim_sparse = model['cosine_sim_sparse']
+    # Load model and data from the pickle file
+    with open(model_path, 'rb') as f:
+        model = pickle.load(f)
 
-@app.route('/')
-def index():
-    return jsonify({"message": "Welcome to the Movie Recommendation API"}), 200
+    data_new = model['data']
+    tfidf_vectorizer = model['tfidf_vectorizer']
+    count_vectorizer = model['count_vectorizer']
+    cosine_sim_sparse = model['cosine_sim_sparse']
+except Exception as e:
+    logging.error(f"Error loading model: {e}")
+    raise
 
 @app.route('/api/recommend-movies', methods=['POST'])
 @cross_origin()
