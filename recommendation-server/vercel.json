@@ -5,6 +5,11 @@
     ],
     "routes": [
       { "src": "/(.*)", "dest": "/app.py" }
-    ]
+    ],
+    "build": {
+      "env": {
+        "VERCEL_BUILD_SCRIPT": "./vercel-build.sh"
+      }
+    }
   }
   
