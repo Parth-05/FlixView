@@ -19,6 +19,10 @@ tfidf_vectorizer = model['tfidf_vectorizer']
 count_vectorizer = model['count_vectorizer']
 cosine_sim_sparse = model['cosine_sim_sparse']
 
+@app.route('/')
+def index():
+    return jsonify({"message": "Welcome to the Movie Recommendation API"}), 200
+
 @app.route('/api/recommend-movies', methods=['POST'])
 @cross_origin()
 def recommend():
