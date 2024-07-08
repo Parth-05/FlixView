@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { FaInfoCircle } from "react-icons/fa";
+import { Tooltip } from 'react-tooltip';
 
 import "./style.scss";
 
@@ -94,6 +96,10 @@ const Reviews = ({ reviews, loading }) => {
             <ContentWrapper>
                 <div className="sectionHeading">
                     Reviews (Positive: {positiveCount}, Negative: {negativeCount})
+                    <FaInfoCircle className="infoIcon" data-tooltip-id="tooltip-info"/>
+                    <Tooltip id="tooltip-info" place="top" effect="solid">
+                        We are using a sentiment analysis machine learning model to generate the sentiment of each review. Sometimes the review sentiment might be wrong.
+                    </Tooltip>
                 </div>
                 {!loading ? (
                     reviews?.results?.length > 0 ? (
