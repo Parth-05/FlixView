@@ -6,6 +6,8 @@ This project is a user-friendly website designed to help users search for movies
 
 Live Project Link: [FlixView](https://flix-view.vercel.app/)
 
+Sentiment Analysis Model: https://github.com/Parth-05/Movie-Review-Sentiment-Analysis
+
 ## Technologies and Languages Used
 
 - **React**: For building a smooth and responsive user interface.
