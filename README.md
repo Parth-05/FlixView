@@ -21,9 +21,11 @@ Live Project Link: [FlixView](https://flix-view.vercel.app/)
 
 2. **Backend Development**:
     - Node.js is used to build the backend server, efficiently handling API requests and server-side operations.
+    - MongoDB Atlas is used to securely store user information such as names, emails, and passwords.
 
 3. **API Integration**:
     - The TMDB API is integrated to fetch detailed movie information such as synopses, ratings, and trailers.
+    - A FastAPI service, deployed on Render, acts as a wrapper around a Hugging Face-hosted sentiment analysis model. The frontend directly sends user review text to this service for real-time sentiment evaluation.
 
 4. **Movie Discovery**:
     - Users can browse through a vast database of movies and receive recommendations based on their interests.
