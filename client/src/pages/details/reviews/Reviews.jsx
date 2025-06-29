@@ -41,46 +41,75 @@ const Reviews = ({ reviews, loading }) => {
         setNegativeCount(negCount);
     };
 
-    const getSentiment = async (text) => {
-        const maxTokens = 512;
-        const truncatedText = text.length > maxTokens ? text.substring(0, maxTokens) : text;
+    // const getSentiment = async (text) => {
+    //     const maxTokens = 512;
+    //     const truncatedText = text.length > maxTokens ? text.substring(0, maxTokens) : text;
 
-        const data = { inputs: truncatedText };
-        const modelUrl = import.meta.env.VITE_APP_HUGGING_FACE_SENTIMENT_ANALYSIS_MODEL;
-        const modelToken = import.meta.env.VITE_APP_HUGGING_FACE_TOKEN;
+    //     const data = { inputs: truncatedText };
+    //     const modelUrl = import.meta.env.VITE_APP_HUGGING_FACE_SENTIMENT_ANALYSIS_MODEL;
+    //     const modelToken = import.meta.env.VITE_APP_HUGGING_FACE_TOKEN;
         
-        const fetchSentiment = async (retryCount = 3, delay = 5000) => {
-            try {
-                const response = await fetch(
-                    modelUrl,
-                    {
-                        headers: {
-                            Authorization: "Bearer " + modelToken,
-                            "Content-Type": "application/json",
-                        },
-                        method: "POST",
-                        body: JSON.stringify(data),
-                    }
-                );
-                const result = await response.json();
+    //     const fetchSentiment = async (retryCount = 3, delay = 5000) => {
+    //         try {
+    //             const response = await fetch(
+    //                 modelUrl,
+    //                 {
+    //                     headers: {
+    //                         Authorization: "Bearer " + modelToken,
+    //                         "Content-Type": "application/json",
+    //                     },
+    //                     method: "POST",
+    //                     body: JSON.stringify(data),
+    //                 }
+    //             );
+    //             const result = await response.json();
 
-                if (response.status === 503 && retryCount > 0) {
-                    // Model is currently loading, wait and retry
-                    await new Promise(res => setTimeout(res, delay));
-                    return fetchSentiment(retryCount - 1, delay);
-                }
+    //             if (response.status === 503 && retryCount > 0) {
+    //                 // Model is currently loading, wait and retry
+    //                 await new Promise(res => setTimeout(res, delay));
+    //                 return fetchSentiment(retryCount - 1, delay);
+    //             }
 
-                // Process the result to determine sentiment
-                const topLabel = result[0].reduce((prev, current) => (prev.score > current.score) ? prev : current).label;
-                return topLabel === "LABEL_1" ? 'positive' : 'negative';
-            } catch (error) {
-                console.error("Error fetching sentiment:", error);
-                return 'unknown';
-            }
-        };
+    //             // Process the result to determine sentiment
+    //             const topLabel = result[0].reduce((prev, current) => (prev.score > current.score) ? prev : current).label;
+    //             return topLabel === "LABEL_1" ? 'positive' : 'negative';
+    //         } catch (error) {
+    //             console.error("Error fetching sentiment:", error);
+    //             return 'unknown';
+    //         }
+    //     };
 
-        return fetchSentiment();
-    };
+    //     return fetchSentiment();
+    // };
+
+    const getSentiment = async (text) => {
+    const maxTokens = 512;
+    const truncatedText = text.length > maxTokens ? text.substring(0, maxTokens) : text;
+
+    const data = { text: truncatedText };  
+
+    const modelUrl = import.meta.env.VITE_APP_SENTIMENT_ANALYSIS_MODEL;
+
+    try {
+        const response = await fetch(modelUrl, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        const label = result.label; // "LABEL_1" or "LABEL_0"
+        return label === "LABEL_1" ? "positive" : "negative";
+
+    } catch (error) {
+        console.error("Error fetching sentiment:", error);
+        return 'unknown';
+    }
+};
+
 
     const skeleton = () => {
         return (
